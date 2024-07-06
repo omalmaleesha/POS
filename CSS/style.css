@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Oldenburg&display=swap');
+.oldenburg-regular {
+  font-family: "Oldenburg", serif;
+  font-weight: bold; /* Increase font weight */
+  font-style: normal;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to top, #ff8c00, #ff4500);
+  
+}
+.edite{
+  margin-top: 100px; 
+  letter-spacing: 15px;
+}
+html, body {
+  height: 100%; /* Ensure body and html take up full height */
+  margin: 0; /* Remove default margin */
+}
+.bodyColor {
+  background-image: url('images\burgery.jpg'); /* Linear gradient */
+  background-size: cover; /* Cover the entire background */
+  background-position: center;
+  height: auto; /* Cover the full height of the viewport */
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-header {
+  background-color: orange;
+  border: 1px solid black;
+  color: black;
+}
+
+.image-container {
+  max-width: 100%; /* Ensures image responsiveness */
+}
+.gradient-background {
+  height: auto; 
+  background-color: rgba(255, 255, 255, 0.63); /* Gradient from left to right */
+  backdrop-filter: blur(10px) brightness(80%);
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align buttons to the left */
+}
+.button-column .btn {
+  width: 350px; /* Set a fixed width for the buttons */
+  margin-bottom: 1rem; /* Add margin between buttons */
+}
+.image-container {
+  text-align: center; /* Center the image in the column */
+}
+.large-image {
+  width: 65%; /* Ensure the image takes full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 700px; /* Set a maximum width for the image */
+}
+
+
+
+
+
+/*Add Customer Css*/
+.horizontal-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.large-form {
+  max-width: 900px;
+  padding: 45px;
+  margin: auto;
+  background-color: #e9e4dfd3;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.custom-label {
+  font-size: 1.5rem; /* Adjust label font size */
+  font-weight: bolder; /* Make labels bold */
+  color: #000000; /* Set label text color */
+  margin-bottom: 0.1rem; /* Add bottom margin to labels */
+}
+.change{
+  font-family: "Oldenburg", serif;
+  font-weight: bold; /* Increase font weight */
+  font-style: normal;
+  letter-spacing: 15px;
+  font-size: 70px;
+  color: #ffffff;
+}
