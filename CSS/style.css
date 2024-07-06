@@ -18,12 +18,11 @@ html, body {
   margin: 0; /* Remove default margin */
 }
 .bodyColor {
-  background-image: url('images/burgery.jpg'); /* Linear gradient */
-  background-size: cover; /* Cover the entire background */
-  background-position: center;
-  height: auto; /* Cover the full height of the viewport */
+  background-color: #000000;
+  /* background-image: url('images/burgery.jpg');  */
+  /* background-position: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; */
 }
 
 .custom-header {
