@@ -18,7 +18,7 @@ html, body {
   margin: 0; /* Remove default margin */
 }
 .bodyColor {
-  background-image: url('images\burgery.jpg'); /* Linear gradient */
+  background-image: url('images/burgery.jpg'); /* Linear gradient */
   background-size: cover; /* Cover the entire background */
   background-position: center;
   height: auto; /* Cover the full height of the viewport */
