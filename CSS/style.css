@@ -90,7 +90,7 @@ html, body {
   font-family: "Oldenburg", serif;
   font-weight: bold; /* Increase font weight */
   font-style: normal;
-  letter-spacing: 15px;
+  letter-spacing: 1px;
   font-size: 70px;
   color: #ffffff;
 }
