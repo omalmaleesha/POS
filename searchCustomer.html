@@ -19,21 +19,16 @@
         <h1 class="change">Search Customer</h1>
       </div>
       <div class="form-group row justify-content-center mb-1">
-        <label
-          for="searchField"
-          class="col-sm-4 col-md-2 col-form-label text-right fs-5"
-          style="color: white"
-          >Search Customer:</label
-        >
+        <label for="searchField" class="col-sm-4 col-md-2 col-form-label text-right fs-5" style="color: white">Search Customer:</label>
         <div class="col-sm-8 col-md-6">
-          <input
-            type="text"
-            class="form-control"
-            id="searchField"
-            placeholder="Search Customer"
-          />
+            <div class="input-group">
+                <input type="text" class="form-control" id="searchField" placeholder="Search Customer">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="searchButton01">Search</button>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
           <form class="large-form">
@@ -47,6 +42,7 @@
               <div class="col-sm-8">
                 <label
                   for="input1"
+                  id="labelID"
                   class="col-sm-4 col-form-label text-right custom-label"
                 ></label>
               </div>
@@ -61,6 +57,7 @@
               <div class="col-sm-8">
                 <label
                   for="input1"
+                  id="labelName"
                   class="col-sm-4 col-form-label text-right custom-label"
                 ></label>
               </div>
@@ -75,6 +72,7 @@
               <div class="col-sm-8">
                 <label
                   for="input1"
+                  id="labelPhone"
                   class="col-sm-4 col-form-label text-right custom-label"
                 ></label>
               </div>
@@ -89,6 +87,7 @@
               <div class="col-sm-8">
                 <label
                   for="input1"
+                  id="labelAddress"
                   class="col-sm-4 col-form-label text-right custom-label"
                 ></label>
               </div>
@@ -103,6 +102,7 @@
               <div class="col-sm-8">
                 <label
                   for="input1"
+                  id="labelDescription"
                   class="col-sm-4 col-form-label text-right custom-label"
                 ></label>
               </div>

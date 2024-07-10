@@ -21,7 +21,7 @@
       </div>
       <div class="row justify-content-center">
         <div class="col-md-6">
-          <form class="large-form">
+          <form id="customerAddForm" class="large-form">
             <!-- Row 1 -->
             <div class="form-group row p-2">
               <label
@@ -33,7 +33,7 @@
                 <input
                   type="text"
                   class="form-control w-50"
-                  id="input1"
+                  id="input01"
                   placeholder="Customer ID"
                 />
               </div>
@@ -49,7 +49,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="input2"
+                  id="input02"
                   placeholder="Name"
                 />
               </div>
@@ -65,7 +65,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="input3"
+                  id="input03"
                   placeholder="Phone Number"
                 />
               </div>
@@ -81,7 +81,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="input4"
+                  id="input04"
                   placeholder="Address"
                 />
               </div>
@@ -97,7 +97,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="input5"
+                  id="input05"
                   placeholder="Description"
                 />
               </div>
@@ -110,13 +110,13 @@
     <div class="container mt-2">
       <div class="row justify-content-center">
         <div class="col-auto">
-          <button class="button1 rounded-5">Save</button>
+          <button id="saveButton" class="button1 rounded-5">Save</button>
         </div>
         <div class="col-auto">
           <button class="button1 rounded-5">Cancel</button>
         </div>
         <div class="col-auto">
-          <button id="navigateButton" class="button1 rounded-5">Exit</button>
+          <button id="navigateButton" class="button1 rounded-5" onclick="save()">Exit</button>
         </div>
       </div>
     </div>
