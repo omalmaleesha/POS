@@ -64,7 +64,18 @@ document.addEventListener("DOMContentLoaded", function () {
   );
   if (navigatePlaceOrder) {
     navigatePlaceOrder.addEventListener("click", function () {
-      window.location.href = "htmlOrders/placeOrder.html";
+      window.location.href = "placeOrder.html";
+    });
+  }
+
+
+  //to items 
+  const navigateOrder = document.getElementById(
+    "itemOrder"
+  );
+  if (navigateOrder) {
+    navigateOrder.addEventListener("click", function () {
+      window.location.href = "item.html";
     });
   }
 });
