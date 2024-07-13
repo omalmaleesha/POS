@@ -1,4 +1,4 @@
-fetch("navBar.html")
+fetch("/navBar.html")
   .then((response) => response.text())
   .then((data) => {
     document.getElementById("navigation").innerHTML = data;
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navigationHomeButton = document.getElementById("navigationHomeButton");
   if (navigationHomeButton) {
     navigationHomeButton.addEventListener("click", function () {
-      window.location.href = "index.html";
+      window.location.href = "index01.html";
     });
   }
 
@@ -57,6 +57,16 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "searchCustomer.html";
     });
   }
+
+  //navigate to place order page
+  const navigatePlaceOrder = document.getElementById(
+    "placeOrder"
+  );
+  if (navigatePlaceOrder) {
+    navigatePlaceOrder.addEventListener("click", function () {
+      window.location.href = "htmlOrders/placeOrder.html";
+    });
+  }
 });
 
 //Customer add delete update search
@@ -66,6 +76,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   const searchButton01 = document.getElementById("searchButton01");
   const searchButton02 = document.getElementById("searchButton02");
 
+
+
+  
   // Retrieve existing customers from sessionStorage
   let customers = JSON.parse(sessionStorage.getItem('customers')) || [];
 
@@ -148,38 +161,97 @@ document.addEventListener("DOMContentLoaded", (event) => {
       });
 
       // Update customer details
-      const updateButton = document.getElementById("updateButton");
-      if (updateButton) {
-          updateButton.addEventListener("click", function(event) {
-              event.preventDefault();
+    const updateButton = document.getElementById("updateButtonSave");
+    if (updateButton) {
+      updateButton.addEventListener("click", function(event) {
+        event.preventDefault();
 
-              const customerID = document.getElementById('input10').value;
-              const updatedCustomer = {
-                  id: customerID,
-                  name: document.getElementById('input20').value,
-                  phone: document.getElementById('input30').value,
-                  address: document.getElementById('input40').value,
-                  description: document.getElementById('input50').value
-              };
+        const customerID = document.getElementById('input10').value;
+        const updatedCustomer = {
+          id: customerID,
+          name: document.getElementById('input20').value,
+          phone: document.getElementById('input30').value,
+          address: document.getElementById('input40').value,
+          description: document.getElementById('input50').value
+        };
 
-              // Find the index of the customer to be updated
-              const index = customers.findIndex(customer => customer.id === customerID);
+        // Find the index of the customer to be updated
+        const index = customers.findIndex(customer => customer.id === customerID);
 
-              if (index !== -1) {
-                  // Replace the old customer with the updated customer
-                  customers[index] = updatedCustomer;
+        if (index !== -1) {
+          // Replace the old customer with the updated customer
+          customers[index] = updatedCustomer;
 
-                  // Save the updated array back to sessionStorage
-                  sessionStorage.setItem('customers', JSON.stringify(customers));
+          // Save the updated array back to sessionStorage
+          sessionStorage.setItem('customers', JSON.stringify(customers));
 
-                  console.log(customers);
+          console.log(customers);
 
-                  // Optionally reset the form after updating
-                  document.getElementById('customerUpdateForm').reset();
-              }
-          });
-      }
+          // Optionally reset the form after updating
+          document.getElementById('customerUpdateForm').reset();
+        } else {
+          console.log(`Customer with ID ${customerID} not found.`);
+        }
+      });
+    }
   }
+
+
+  //delete method 
+  if (searchButton03) {
+    searchButton03.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        const searchQuery = document.getElementById('searchField03').value.trim().toLowerCase();
+
+        // Find customer matching the search query
+        const foundCustomer = customers.find(customer => customer.name.toLowerCase() === searchQuery);
+
+        if (foundCustomer) {
+            // Update labels with customer details
+            document.getElementById('labelID').innerText = foundCustomer.id;
+            document.getElementById('labelName').innerText = foundCustomer.name;
+            document.getElementById('labelPhone').innerText = foundCustomer.phone;
+            document.getElementById('labelAddress').innerText = foundCustomer.address;
+            document.getElementById('labelDescription').innerText = foundCustomer.description;
+        } else {
+            // Clear labels if no matching customer found
+            document.getElementById('labelID').innerText = '---------';
+            document.getElementById('labelName').innerText = '---------';
+            document.getElementById('labelPhone').innerText = '---------';
+            document.getElementById('labelAddress').innerText = '---------';
+            document.getElementById('labelDescription').innerText = '---------';
+        }
+    });
+  }
+
+  const deleteButton = document.getElementById("deleteButton");
+    if (deleteButton) {
+      deleteButton.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        // Get the customer ID to delete
+        let customerName = document.getElementById('searchField03').value.trim().toLowerCase();
+
+        // Find the index of the customer to be deleted
+        const index = customers.findIndex(customer => customer.name.toLowerCase() === customerName);
+
+        if (index !== -1) {
+          // Remove the customer from the array
+          customers.splice(index, 1);
+
+          // Save the updated array back to sessionStorage
+          sessionStorage.setItem('customers', JSON.stringify(customers));
+
+          console.log(customers);
+
+          // Reset the delete form after deleting
+          document.getElementById('customerDeleteForm').reset();
+        } else {
+          console.log(`Customer with ID ${customerID} not found.`);
+        }
+      });
+    }
 });
 
 

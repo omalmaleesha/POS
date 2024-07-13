@@ -8,8 +8,9 @@
   color: transparent;
   background-image: linear-gradient(to top, #ff8c00, #ff4500);
 }
+
 .button1 {
-  --color: #a90000;
+  --color: #ffffff;
   padding: 0.8em 1.7em;
   background-color: transparent;
   border-radius: 0.3em;
@@ -114,7 +115,10 @@ body {
   margin: 0; /* Remove default margin */
 }
 .bodyColor {
-  background-image: radial-gradient(circle at 99% 33%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 37%,transparent 37%, transparent 100%),radial-gradient(circle at 46% 16%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 43%,transparent 43%, transparent 100%),radial-gradient(circle at 99% 25%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 22%,transparent 22%, transparent 100%),radial-gradient(circle at 57% 88%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 86%,transparent 86%, transparent 100%),radial-gradient(circle at 82% 78%, hsla(235,0%,48%,0.03) 0%, hsla(235,0%,48%,0.03) 22%,transparent 22%, transparent 100%),linear-gradient(119deg, rgb(0,0,0),rgb(0,0,0));/
+  background-image: url('/images/burgery.jpg');
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: blur(3px);
 }
 
 .custom-header {
@@ -182,3 +186,6 @@ body {
   font-size: 70px;
   color: #ffffff;
 }
+
+/* sign up page background and css*/
+
