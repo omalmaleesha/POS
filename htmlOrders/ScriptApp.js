@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const navigateButton = document.getElementById("navigationHomeButton01");
     if (navigateButton) {
       navigateButton.addEventListener("click", function () {
-        window.location.href = "/index01.html";
+        window.location.href = "index01.html";
       });
     }
 
