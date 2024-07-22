@@ -116,7 +116,7 @@ body {
 }
 .bodyColor {
   background-image: url('burgery.jpg');
-  background-size: cover;
+  background-size: auto;
   background-repeat: no-repeat;
   background-position: center;
   backdrop-filter: blur(3px);

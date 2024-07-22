@@ -69,13 +69,43 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-  //to items 
-  const navigateOrder = document.getElementById(
-    "itemOrder"
+  //to reports 
+  const navigateReport = document.getElementById(
+    "Reports"
   );
-  if (navigateOrder) {
-    navigateOrder.addEventListener("click", function () {
-      window.location.href = "item.html";
+  if (navigateReport) {
+    navigateReport.addEventListener("click", function () {
+      window.location.href = "report.html";
+    });
+  }
+
+  //place orders
+  const navigateOrders = document.getElementById(
+    "placeOrders"
+  );
+  if (navigateOrders) {
+    navigateOrders.addEventListener("click", function () {
+      window.location.href = "viewOrders.html";
+    });
+  }
+
+  //view Customer
+  const navigateviewCustomer = document.getElementById(
+    "ViewCustomer"
+  );
+  if (navigateviewCustomer) {
+    navigateviewCustomer.addEventListener("click", function () {
+      window.location.href = "viewCustomer.html";
+    });
+  }
+
+  //exit buton
+  const navigateExit = document.getElementById(
+    "exitbtn"
+  );
+  if (navigateExit) {
+    navigateExit.addEventListener("click", function () {
+      window.location.href = "index.html";
     });
   }
 });
