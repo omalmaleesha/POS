@@ -6,7 +6,27 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "index01.html";
       });
     }
+    
+    const navigateBill = document.getElementById("navigationHomeButtonBill");
+    if (navigateBill) {
+        navigateBill.addEventListener("click", function () {
+        window.location.href = "bill.html";
+      });
+    }
 
+    const additem = document.getElementById("additem");
+    if (additem) {
+        additem.addEventListener("click", function () {
+        window.location.href = "addItem.html";
+      });
+    }
+
+    const deleteitem = document.getElementById("deleteitem");
+    if (deleteitem) {
+        deleteitem.addEventListener("click", function () {
+        window.location.href = "deleteItem.html";
+      });
+    }
 });
 
 
@@ -57,21 +77,21 @@ function updateTable(category) {
     tableBody.innerHTML = "";
 
     if (category in cardData) {
-        cardData[category].forEach(item => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${item[0]}</td>
-                <td>${item[1]}</td>
-                <td>${item[2]}</td>
-                <td>${item[3]}</td>
-                <td>${item[4]}</td>
-                <td>${item[5]}</td>
-                <td><button class="btn btn-primary btn-sm add-to-cart">Add</button></td>
-            `;
-            tableBody.appendChild(row);
-        });
+      cardData[category].forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${item[0]}</td>
+          <td>${item[2]}</td>
+          <td>${item[1]}</td>
+          <td>${item[3]}</td>
+          <td>${item[4]}</td>
+          <td><button class="btn btn-primary btn-sm add-to-cart">Add</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
     }
-}
+  }
  // Event listener for card buttons
  const cardButtons = document.querySelectorAll(".card-button");
  cardButtons.forEach(button => {
@@ -96,5 +116,34 @@ function updateTable(category) {
              <p><strong>${itemName}</strong> - Price: ${itemPrice}</p>
          `;
          orderItems.appendChild(orderItem);
+         
      }
  });
+ document.getElementById('saveButton').addEventListener('click', function() {
+    const itemName = document.getElementById('itemName').value;
+    const itemDescription = document.getElementById('itemDescription').value;
+    const itemQuantity = document.getElementById('itemQuantity').value;
+    const itemPrice = document.getElementById('itemPrice').value;
+    const itemCategory = document.getElementById('itemCategory').value;
+
+    const itemData = [
+      itemName,
+      itemDescription,
+      itemPrice,
+      "N/A", // Placeholder for Discount
+      "N/A"  // Placeholder for Other
+    ];
+
+    if (cardData[itemCategory]) {
+      cardData[itemCategory].push(itemData);
+    } else {
+      cardData[itemCategory] = [itemData];
+    }
+
+    sessionStorage.setItem('cardData', JSON.stringify(cardData));
+    updateTable(itemCategory);
+    alert('Item data saved and table updated');
+  });
+
+
+  
