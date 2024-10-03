@@ -30,31 +30,31 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-const cardData = {
-    "Burgers": [
-        ["Burger 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
-        ["Burger 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
-    ],
-    "Submarian": [
-        ["Sub 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
-        ["Sub 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
-    ],
-    "Fries": [
-        ["Fries 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
-        ["Fries 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
-    ],
-    "Pasta": [
-        ["Pasta 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
-        ["Pasta 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
-    ],
-    "Chicken": [
-        ["Chicken 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
-        ["Chicken 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
-    ],
-    "Beverage": [
-        ["Beverage 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
-        ["Beverage 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
-    ]
+const cardDatas = {
+    // "Burgers": [
+    //     ["Burger 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
+    //     ["Burger 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
+    // ],
+    // "Submarian": [
+    //     ["Sub 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
+    //     ["Sub 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
+    // ],
+    // "Fries": [
+    //     ["Fries 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
+    //     ["Fries 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
+    // ],
+    // "Pasta": [
+    //     ["Pasta 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
+    //     ["Pasta 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
+    // ],
+    // "Chicken": [
+    //     ["Chicken 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
+    //     ["Chicken 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
+    // ],
+    // "Beverage": [
+    //     ["Beverage 1", "Description 1", "Price 1", "Calories 1", "Size 1", "Type 1"],
+    //     ["Beverage 2", "Description 2", "Price 2", "Calories 2", "Size 2", "Type 2"]
+    // ]
 };
 
 function updateContent(title) {
@@ -76,8 +76,8 @@ function updateTable(category) {
     const tableBody = document.querySelector("#menuTable tbody");
     tableBody.innerHTML = "";
 
-    if (category in cardData) {
-      cardData[category].forEach((item, index) => {
+    if (category in cardDatas) {
+      cardDatas[category].forEach((item, index) => {
         const row = document.createElement("tr");
         row.innerHTML = `
           <td>${index + 1}</td>
@@ -93,14 +93,17 @@ function updateTable(category) {
     }
   }
  // Event listener for card buttons
- const cardButtons = document.querySelectorAll(".card-button");
- cardButtons.forEach(button => {
-     button.addEventListener("click", function() {
-         const category = this.dataset.type;
-         document.getElementById("selectedType").textContent = category;
-         updateTable(category);
-     });
- });
+ document.addEventListener("DOMContentLoaded", function() {
+    const cardButtons = document.querySelectorAll(".card-button");
+    cardButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const category = this.dataset.type;
+            document.getElementById("selectedType").textContent = category;
+            updateTables(category); // Call the correct function
+        });
+    });
+});
+
 
  // Event listener for Add buttons in the table
  document.addEventListener("click", function(event) {
@@ -119,31 +122,71 @@ function updateTable(category) {
          
      }
  });
- document.getElementById('saveButton').addEventListener('click', function() {
+
+ function addItem() {
     const itemName = document.getElementById('itemName').value;
     const itemDescription = document.getElementById('itemDescription').value;
     const itemQuantity = document.getElementById('itemQuantity').value;
     const itemPrice = document.getElementById('itemPrice').value;
     const itemCategory = document.getElementById('itemCategory').value;
-
-    const itemData = [
-      itemName,
-      itemDescription,
-      itemPrice,
-      "N/A", // Placeholder for Discount
-      "N/A"  // Placeholder for Other
-    ];
-
-    if (cardData[itemCategory]) {
-      cardData[itemCategory].push(itemData);
+ 
+    const item = {
+        name: itemName,
+        description: itemDescription,
+        quantity: itemQuantity,
+        price: itemPrice,
+        category: itemCategory
+    };
+ 
+    const allowedCategories = ["Burgers", "Submarian", "Fries", "Pasta", "Chicken", "Beverage"];
+ 
+    if (allowedCategories.includes(itemCategory)) {
+        let categoryArray = JSON.parse(localStorage.getItem(itemCategory)) || [];
+        categoryArray.push(item);
+        localStorage.setItem(itemCategory, JSON.stringify(categoryArray));
+ 
+        document.getElementById('itemName').value = '';
+        document.getElementById('itemDescription').value = '';
+        document.getElementById('itemQuantity').value = '';
+        document.getElementById('itemPrice').value = '';
+        document.getElementById('itemCategory').value = '';
+ 
+        console.log('Item added to', itemCategory, 'category:', item);
     } else {
-      cardData[itemCategory] = [itemData];
+        alert("Invalid category! Please use one of the following categories: " + allowedCategories.join(", "));
     }
+ }
+ 
+ function updateTables(category) {
+    const itemsArray = JSON.parse(localStorage.getItem(category)) || [];
+    const tableBody = document.querySelector("#menuTable tbody");
+    tableBody.innerHTML = "";
+ 
+    console.log(`Updating table for category: ${category}`);
+    console.log(itemsArray);
+ 
+    if (itemsArray.length === 0) {
+        console.log("No items to display.");
+        return;
+    }
+ 
+    itemsArray.forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>${item.description}</td>
+            <td>${item.price}</td>
+            <td>${item.category}</td>
+            <td><button class="btn btn-primary btn-sm add-to-cart">Add</button></td>
+        `;
+        tableBody.appendChild(row);
+    });
+ }
+ 
+ 
 
-    sessionStorage.setItem('cardData', JSON.stringify(cardData));
-    updateTable(itemCategory);
-    alert('Item data saved and table updated');
-  });
 
 
   
