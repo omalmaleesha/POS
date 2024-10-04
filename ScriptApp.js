@@ -7,12 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
     
-    const navigateBill = document.getElementById("navigationHomeButtonBill");
-    if (navigateBill) {
-        navigateBill.addEventListener("click", function () {
-        window.location.href = "bill.html";
-      });
-    }
+    // const navigateBill = document.getElementById("navigationHomeButtonBill");
+    // if (navigateBill) {
+    //     navigateBill.addEventListener("click", function () {
+    //     window.location.href = "bill.html";
+    //   });
+    // }
 
     const additem = document.getElementById("additem");
     if (additem) {
@@ -105,23 +105,22 @@ function updateTable(category) {
 });
 
 
- // Event listener for Add buttons in the table
- document.addEventListener("click", function(event) {
-     if (event.target.classList.contains("add-to-cart")) {
-         const itemRow = event.target.closest("tr");
-         const itemName = itemRow.cells[0].textContent;
-         const itemPrice = itemRow.cells[2].textContent;
+//  document.addEventListener("click", function(event) {
+//      if (event.target.classList.contains("add-to-cart")) {
+//          const itemRow = event.target.closest("tr");
+//          const itemName = itemRow.cells[0].textContent;
+//          const itemPrice = itemRow.cells[2].textContent;
 
-         const orderItems = document.getElementById("orderItems");
-         const orderItem = document.createElement("div");
-         orderItem.classList.add("mb-2");
-         orderItem.innerHTML = `
-             <p><strong>${itemName}</strong> - Price: ${itemPrice}</p>
-         `;
-         orderItems.appendChild(orderItem);
+//          const orderItems = document.getElementById("orderItems");
+//          const orderItem = document.createElement("div");
+//          orderItem.classList.add("mb-2");
+//          orderItem.innerHTML = `
+//              <p><strong>${itemName}</strong> - Price: ${itemPrice}</p>
+//          `;
+//          orderItems.appendChild(orderItem);
          
-     }
- });
+//      }
+//  });
 
  function addItem() {
     const itemName = document.getElementById('itemName').value;
@@ -187,6 +186,86 @@ function updateTable(category) {
  
  
 
+// Initialize cartItems from localStorage
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
+// Function to handle adding items to the cart
+document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("add-to-cart")) {
+        const itemRow = event.target.closest("tr");
+        const itemName = itemRow.cells[1].textContent; // Item Name
+        const itemPrice = parseFloat(itemRow.cells[2].textContent); // Price
 
-  
+        // Check if the item already exists in the cart
+        const existingItem = cartItems.find(item => item.name === itemName);
+
+        if (existingItem) {
+            // Update the quantity and total if the item already exists
+            existingItem.quantity += 1;
+            existingItem.total = existingItem.quantity * itemPrice;
+        } else {
+            // Add new item to the cart
+            cartItems.push({
+                name: itemName,
+                price: itemPrice,
+                quantity: 1,
+                total: itemPrice
+            });
+        }
+
+        // Update the UI to show the new cart item
+        updateOrderItems(cartItems);
+
+        // Save the cart to localStorage
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        console.log("Cart Items Updated:", cartItems);
+    }
+});
+
+// Function to update the order items section (UI update)
+function updateOrderItems(cartItems) {
+    const orderItemsDiv = document.getElementById("orderItems");
+    orderItemsDiv.innerHTML = ''; // Clear previous items
+
+    cartItems.forEach(item => {
+        const orderItem = document.createElement("div");
+        orderItem.classList.add("mb-2");
+        orderItem.innerHTML = `
+            <p><strong>${item.name}</strong> - Price: $${item.price.toFixed(2)} x ${item.quantity} = $${item.total.toFixed(2)}</p>
+        `;
+        orderItemsDiv.appendChild(orderItem);
+    });
+}
+
+document.getElementById("navigationHomeButtonBill").addEventListener("click", function() {
+    // Get the Customer ID from the input field
+    const custId = document.getElementById("custId").value;
+
+    // Calculate total quantity and total price of the entire order
+    const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cartItems.reduce((sum, item) => sum + item.total, 0);
+
+    // Create a new order object
+    const newOrder = {
+        customerId: custId,
+        totalQuantity: totalQuantity,
+        totalPrice: totalPrice,
+        items: cartItems    // Still keep the individual items
+    };
+
+    // Retrieve existing orders from localStorage or initialize an empty array
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+    // Add the new order to the array of orders
+    orders.push(newOrder);
+
+    // Store the updated orders back to localStorage
+    localStorage.setItem("orders", JSON.stringify(orders));
+
+    alert("Order has been processed!");
+
+    // Clear the cart and update UI
+    cartItems = [];
+    updateOrderItems(cartItems);  // Clear the cart UI
+    localStorage.removeItem("cartItems");  // Optionally clear the cart data
+});

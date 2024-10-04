@@ -19,35 +19,60 @@
 
 
 
-    <div class="container mt-4 text-white">
-      <div class="row">
-        <div class="col-md-2 col-sm-4 custom-col">
-          <h4>Column 1</h4>
-          <p>Content for column 1</p>
-        </div>
-        <div class="col-md-2 col-sm-4 custom-col">
-          <h4>Column 2</h4>
-          <p>Content for column 2</p>
-        </div>
-        <div class="col-md-2 col-sm-4 custom-col">
-          <h4>Column 3</h4>
-          <p>Content for column 3</p>
-        </div>
-        <div class="col-md-2 col-sm-4 custom-col">
-          <h4>Column 4</h4>
-          <p>Content for column 4</p>
-        </div>
-        <div class="col-md-2 col-sm-4 custom-col">
-          <h4>Column 5</h4>
-          <p>Content for column 5</p>
-        </div>
-        <div class="col-md-2 col-sm-4 custom-col">
-          <h4>Column 6</h4>
-          <p>Content for column 6</p>
+    <div class="container mt-2">
+      <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover table-sm">
+              <thead class="thead-dark">
+                  <tr>
+                      <th>Order</th>
+                      <th>Customer ID</th>
+                      <th>Total Quantity</th>
+                      <th>Total Price</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody id="orderTableBody">
+                  <!-- Order rows will be dynamically populated here -->
+              </tbody>
+          </table>
+      </div>
+  </div>
+  <!-- Hidden table for viewing order items -->
+<div id="orderItemsModal" class="modal" style="display: none;">
+  <div class="modal-dialog modal-lg"> <!-- Make the modal wider with modal-lg -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Order Items</h4>
+        <button type="button" class="close btn bg-danger">&times;</button> <!-- Close button -->
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive"> <!-- Ensure the table is responsive -->
+          <table id="orderItemsTable" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="orderItemsTableBody">
+              <!-- Order items will be populated dynamically -->
+            </tbody>
+          </table>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="close btn btn-secondary" >Close</button>
+      </div>
     </div>
+  </div>
+</div>
 
+  
+  
+  
+  
 
 
 
@@ -73,5 +98,105 @@
     ></script>
     <script src="app.js"></script>
     <script src="ScriptApp.js"></script>
+    <script>
+// Function to populate the order table with orders
+function populateOrderTable() {
+    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const orderTableBody = document.getElementById("orderTableBody");
+    orderTableBody.innerHTML = '';  // Clear previous table content
+
+    // Loop through each order and create table rows
+    orders.forEach((order, index) => {
+        const totalQuantity = order.items.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPrice = order.items.reduce((sum, item) => sum + item.total, 0);
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${index + 1}</td>  <!-- Order number -->
+            <td>${order.customerId}</td> <!-- Customer ID -->
+            <td>${totalQuantity}</td> <!-- Total quantity of items -->
+            <td>${totalPrice.toFixed(2)}</td> <!-- Total price -->
+            <td>
+                <button class="btn btn-sm btn-primary view-items-btn" data-cust-id="${order.customerId}">View Items</button>
+            </td> <!-- Actions column for the "View Items" button -->
+        `;
+        orderTableBody.appendChild(row);
+    });
+
+    // Attach click event listener for the "View Items" buttons
+    document.querySelectorAll(".view-items-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            const customerId = this.getAttribute("data-cust-id");
+            const order = orders.find(order => order.customerId === customerId);
+
+            // Populate order items in the modal or small table
+            populateOrderItemsTable(order.items);
+        });
+    });
+}
+
+// Function to populate the order items table (or modal)
+function populateOrderItemsTable(items) {
+    const orderItemsTableBody = document.getElementById("orderItemsTableBody");
+    orderItemsTableBody.innerHTML = '';  // Clear previous items
+
+    // Loop through the items in the order and create table rows
+    items.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>${item.price.toFixed(2)}</td>
+            <td>${item.total.toFixed(2)}</td>
+        `;
+        orderItemsTableBody.appendChild(row);
+    });
+
+    // Show the modal or section with order items
+    showModal();  // Assuming you use a modal to display order items
+}
+
+// Function to show the modal (for displaying order items)
+function showModal() {
+    const modal = document.getElementById("orderItemsModal");
+    modal.style.display = "block"; // Show the modal
+
+    // Close the modal when the "x" is clicked
+    document.querySelector(".close").addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    // Close the modal when clicking outside the modal content
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+}
+
+// Call this function when the page loads
+window.addEventListener("load", function() {
+    populateOrderTable();  // Populate the orders table on page load
+});
+// Function to show the modal
+function showModal() {
+    const modal = document.getElementById("orderItemsModal");
+    modal.style.display = "block"; // Show the modal
+
+    // Close the modal when the 'x' is clicked
+    document.querySelector(".close").addEventListener("click", function() {
+        modal.style.display = "none";
+    });
+
+    // Close the modal when clicking outside the modal content
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+}
+
+
+    </script>
 </body>
 </html>

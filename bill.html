@@ -20,16 +20,17 @@
 
 
     <div class="container mt-5">
-        <h1 class="text-center">Invoice</h1>
+        <h1 class="text-center text-white">Invoice</h1>
         <div class="table-responsive mt-4">
             <table id="invoiceTable" class="table table-bordered">
                 <thead class="thead-light">
                     <tr>
                         <th>Item Name</th>
+                        <th>CustomerID</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Total</th>
-                        <th></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -68,7 +69,46 @@
     <script src="app.js"></script>
     <script src="ScriptApp.js"></script>
     <script>
-
+console.log(localStorage.getItem("cartItems"));
     </script>
+    <script>
+      // Function to populate the invoice table with cart data
+function populateInvoiceTable() {
+    const invoiceTableBody = document.getElementById("invoiceTable").querySelector("tbody");
+    invoiceTableBody.innerHTML = '';  // Clear previous content
+
+    // Retrieve order data from localStorage
+    const orderData = JSON.parse(localStorage.getItem("orderData")); // Updated to get orderData
+
+    // Check if orderData exists
+    if (orderData && orderData.items) {
+        const custId = orderData.customerId; // Get customer ID
+
+        // Loop through the cart items and create table rows
+        orderData.items.forEach(item => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${custId}</td> <!-- Display Customer ID -->
+                <td>${item.quantity}</td>
+                <td>$${item.price.toFixed(2)}</td>
+                <td>$${item.total.toFixed(2)}</td>
+            `;
+            invoiceTableBody.appendChild(row);
+        });
+    } else {
+        // Optional: Display a message if there are no items in the order
+        const row = document.createElement("tr");
+        row.innerHTML = `<td colspan="5" class="text-center">No items found in the order.</td>`;
+        invoiceTableBody.appendChild(row);
+    }
+}
+
+// Populate the invoice table when the page loads
+window.addEventListener("load", function() {
+    populateInvoiceTable();  // Call the function to populate the table
+});
+
+      </script>
 </body>
 </html>

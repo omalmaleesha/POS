@@ -1,0 +1,9 @@
+.modal-dialog {
+    max-width: 90%; /* Set the max width to 90% of the screen */
+    width: auto;    /* Let the modal adjust its width dynamically */
+  }
+  
+  .modal-body {
+    padding: 20px; /* Optional: Add some padding inside the modal */
+  }
+  

@@ -92,13 +92,13 @@
                     <table id="menuTable" class="table table-bordered">
                         <thead class="thead-light">
                             <tr>
-                                <th style="background-color: rgb(240, 153, 23); color: rgb(0, 0, 0);">Item ID</th>
-                                <th style="background-color: rgb(240, 153, 23); color: rgb(0, 0, 0);">Item Name</th>
-                                <th style="background-color: rgb(240, 153, 23); color: rgb(0, 0, 0);">Price</th>
-                                <th style="background-color: rgb(240, 153, 23); color: rgb(0, 0, 0);">Descripton</th>
-                                <th style="background-color: rgb(240, 153, 23); color: rgb(0, 0, 0);">Discount</th>
-                                <th style="background-color: rgb(240, 153, 23); color: rgb(0, 0, 0);">Other</th>
-                                <th style="background-color: rgb(240, 153, 23); color: rgb(0, 0, 0);">Add</th>
+                                <th>Item ID</th>
+                                <th >Item Name</th>
+                                <th >Price</th>
+                                <th >Descripton</th>
+                                <th >Discount</th>
+                                <th >Other</th>
+                                <th >Add</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,6 +113,7 @@
             <div class="col-lg-4">
                 <div class="order-cart mt-0">
                     <h2>Order Cart</h2>
+                    <label>CustId</label> <input type="text" id="custId" style="border-width: 0px;">
                     <div id="orderItems">
                         <!-- Order items will be added dynamically -->
                     </div>
@@ -146,5 +147,14 @@
     ></script>
     <script src="app.js"></script>
     <script src="ScriptApp.js"></script>
+    <script>
+        // This script redirects to the bill page on button click
+        const navigateBill = document.getElementById("navigationHomeButtonBill");
+        if (navigateBill) {
+            navigateBill.addEventListener("click", function () {
+                window.location.href = "bill.html";  // Redirect to the bill page
+            });
+        }
+        </script>
 </body>
 </html>
